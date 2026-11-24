@@ -1,1 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>数据新闻 · 青蛙的“三张面孔”：多样、有用，却在退场</title>
 
+<style>
+/* ===================== 全局 ===================== */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #111111;
+  font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB",
+               "Source Han Sans SC", "Noto Sans SC", sans-serif;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.wrap { max-width: 940px; margin: 0 auto; padding: 0 24px; }
+
+/* ===================== 头部 ===================== */
+.hero {
+  border-top: 6px solid #1565C0;
+  background: linear-gradient(180deg, #F5FAFF 0%, #FFFFFF 100%);
+  padding: 52px 0 34px;
+  border-bottom: 1px solid #DCEEFF;
+}
+.tag {
+  display: inline-block;
+  font-size: 12.5px;
+  letter-spacing: 2px;
+  color: #1565C0;
+  border: 1px solid #BBDEFB;
+  background: #fff;
+  border-radius: 999px;
+  padding: 3px 14px;
+  margin-bottom: 18px;
+}
+h1 {
+  font-size: 38px;
+  line-height: 1.28;
+  margin: 0 0 14px;
+  color: #0D47A1;
+  letter-spacing: -0.5px;
+}
+.hero .subtitle {
+  font-size: 21px;
+  font-weight: 600;
+  color: #1565C0;
+  margin: 0 0 20px;
+}
+.hero .meta { font-size: 13.5px; color: #5b6b7c; margin: 0; }
+.hero .meta b { color: #0D47A1; font-weight: 600; }
+
+/* ===================== 正文 ===================== */
+main { padding-bottom: 30px; }
+
+section {
+  padding: 46px 0 10px;
+  border-bottom: 1px dashed #DCEEFF;
+}
+section:last-of-type { border-bottom: none; }
+
+h2 {
+  font-size: 25px;
+  color: #0D47A1;
+  margin: 0 0 18px;
+  padding-left: 16px;
+  position: relative;
+  letter-spacing: -0.3px;
+}
+h2::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 10px; bottom: 10px;
+  width: 5px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #1E88E5, #0D47A1);
+}
+
+p {
+  font-size: 16.5px;
+  color: #1a1a1a;
+  margin: 0 0 16px;
+  text-align: justify;
+}
+.hl { color: #0D47A1; font-weight: 700; }
+
+/* ===================== 数据卡片 ===================== */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 16px;
+  margin: 24px 0 28px;
+}
+.stat {
+  background: #F5FAFF;
+  border: 1px solid #DCEEFF;
+  border-radius: 14px;
+  padding: 18px 20px;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.stat:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(21, 101, 192, .12);
+}
+.stat .num {
+  font-size: 30px;
+  font-weight: 800;
+  color: #1565C0;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+.stat .num small { font-size: 14px; font-weight: 600; margin-left: 3px; color: #1E88E5; }
+.stat .lab { font-size: 13.5px; color: #45525f; margin-top: 8px; }
+
+/* ===================== 图表卡片 ===================== */
+.card {
+  background: #ffffff;
+  border: 1px solid #DCEEFF;
+  border-radius: 16px;
+  padding: 22px 22px 18px;
+  margin: 26px 0 30px;
+  box-shadow: 0 8px 26px rgba(21, 101, 192, .07);
+}
+.card h3 { font-size: 17px; color: #0D47A1; margin: 0 0 4px; }
+.card .desc { font-size: 13.5px; color: #5b6b7c; margin: 0 0 14px; }
+
+.chart-box { position: relative; width: 100%; height: 360px; }
+.chart-box.tall { height: 470px; }
+
+.note { font-size: 12.5px; color: #6b7885; margin: 14px 0 0; line-height: 1.7; }
+
+/* ===================== GIF ===================== */
+.gif-wrap { text-align: center; padding: 8px 0 6px; }
+.gif-wrap img {
+  max-width: 100%;
+  border-radius: 12px;
+  border: 1px solid #DCEEFF;
+  display: inline-block;
+}
+
+/* ===================== 原始数据折叠表 ===================== */
+details.data-details {
+  margin-top: 18px;
+  border: 1px solid #DCEEFF;
+  border-radius: 12px;
+  padding: 12px 18px;
+  background: #FAFCFF;
+}
+details.data-details summary {
+  cursor: pointer;
+  color: #1565C0;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  list-style: none;
+}
+details.data-details summary::-webkit-details-marker { display: none; }
+details.data-details summary::before { content: "▸ "; }
+details.data-details[open] summary::before { content: "▾ "; }
+
+table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 13.5px; }
+th, td { border-bottom: 1px solid #E3F2FD; padding: 8px 10px; text-align: left; vertical-align: top; }
+th { background: #F0F7FF; color: #0D47A1; font-weight: 700; }
+td { color: #222; }
+
+/* ===================== 结论 ===================== */
+.conclusion {
+  background: #F5FAFF;
+  border-left: 5px solid #1565C0;
+  border-radius: 0 14px 14px 0;
+  padding: 26px 28px;
+  margin: 40px 0 20px;
+}
+.conclusion h2 { border: none; padding-left: 0; font-size: 22px; margin-bottom: 12px; }
+.conclusion h2::before { display: none; }
+.conclusion p:last-child { margin-bottom: 0; }
+
+/* ===================== 页脚 ===================== */
+footer {
+  border-top: 1px solid #DCEEFF;
+  background: #FAFCFF;
+  padding: 26px 0 44px;
+}
+footer p { font-size: 12.5px; color: #6b7885; margin: 0 0 6px; text-align: left; }
+
+/* ===================== 响应式 ===================== */
+@media (max-width: 640px) {
+  h1 { font-size: 27px; }
+  .hero .subtitle { font-size: 17px; }
+  h2 { font-size: 21px; }
+  p { font-size: 15.5px; }
+  .chart-box { height: 300px; }
+  .chart-box.tall { height: 420px; }
+  .stat .num { font-size: 25px; }
+  .conclusion { padding: 20px 18px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ==================== 头部 ==================== -->
+<header class="hero">
+  <div class="wrap">
+    <span class="tag">数 据 新 闻</span>
+    <h1>青蛙的“三张面孔”</h1>
+    <p class="subtitle">多样、有用，却在退场</p>
+    <p class="meta">
+      数据来源：<b>IUCN 红色名录 2025-2</b> · Amphibian Ark / Borzée et al. (2025) ·
+      IUCN ASG FrogLog (2026) · 全球两栖动物评估综合
+    </p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ==================== 导语 ==================== -->
+  <section id="lead">
+    <p>
+      全球两栖动物刚刚跨过一个里程碑：被描述的物种数达到 <span class="hl">9,072 种</span>，其中无尾目（青蛙与蟾蜍）约
+      <span class="hl">7,828 种</span>，占绝对多数。中国记录的蛙科物种有 <span class="hl">164 种</span>，从乡间水田的黑斑蛙、泽蛙，
+      到山林溪流中的石蛙，它们构成了一个被低估的“隐形物种库”。
+    </p>
+    <p>
+      然而，同一组数据也指向另一面：在 IUCN 红色名录评估中，<span class="hl">41%</span> 的两栖动物被归入受威胁等级，
+      蛙类（无尾目）的受威胁比例为 <span class="hl">39%</span>，两栖动物是脊椎动物中受威胁最严重的一类。
+    </p>
+  </section>
+
+  <!-- ==================== 01 多样 ==================== -->
+  <section id="sec-diversity">
+    <h2>01 &nbsp;多样：一个被低估的“隐形物种库”</h2>
+    <p>
+      从全球到中国，青蛙的“家底”比多数人想象得厚：全球已描述两栖动物 9,072 种，其中无尾目 7,828 种；
+      中国记录的蛙科物种 164 种，分布在稻田、溪流、山林与城市边缘。
+    </p>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="num">9,072<small>种</small></div>
+        <div class="lab">全球已描述两栖动物物种数</div>
+      </div>
+      <div class="stat">
+        <div class="num">7,828<small>种</small></div>
+        <div class="lab">无尾目（蛙 + 蟾）物种数，占绝对多数</div>
+      </div>
+      <div class="stat">
+        <div class="num">164<small>种</small></div>
+        <div class="lab">中国蛙科记录物种数</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 02 退场 ==================== -->
+  <section id="sec-threat">
+    <h2>02 &nbsp;退场：脊椎动物中最危险的一类</h2>
+    <p>
+      在 IUCN 红色名录评估中，两栖动物的受威胁比例为 <span class="hl">41%</span>，蛙类（无尾目）为
+      <span class="hl">39%</span>——均高于哺乳动物的 26% 与鸟类的 11%。两栖动物是脊椎动物中受威胁最严重的一类。
+    </p>
+
+    <!-- 图 1：柱形图 -->
+    <div class="card">
+      <h3>图 1 · 受威胁物种比例对比</h3>
+      <p class="desc">IUCN 红色名录评估类群 · 悬停 / 点击柱体查看具体数值</p>
+      <div class="chart-box">
+        <canvas id="barChart"></canvas>
+      </div>
+      <p class="note">
+        数据来源：IUCN 红色名录 2025-2；蛙类数据来自 Amphibian Ark / Borzée et al. (2025)。柱高按比例示意。
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== 03 有用 ==================== -->
+  <section id="sec-value">
+    <h2>03 &nbsp;有用：一份可量化的“数字账本”</h2>
+    <p>
+      青蛙的生态价值有具体的“数字账本”。田间观察数据常被通俗地表述为“一只青蛙一天捕食害虫 50 至 200 只，一年可达 1.5 万只左右”。
+      更严格的研究给出了“食谱占比”：菲律宾吕宋疣蛙的食谱中，水稻害虫占 <span class="hl">54.1%</span>；日本树蛙在豆田胃内容物分析中，
+      蚜虫占全部猎物的 <span class="hl">67.2%</span>，叶甲和毛虫也频繁出现。
+    </p>
+    <p>
+      这意味着青蛙并非“偶尔吃虫”，而是在特定农田生态系统中承担着可量化的害虫抑制功能。但这一功能正被栖息地丧失和气候变化削弱：
+      全球评估显示，<span class="hl">37%</span> 的两栖动物种群状况恶化可归因于栖息地丧失，<span class="hl">39%</span> 与气候变化相关。
+    </p>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="num">50–200<small>只/天</small></div>
+        <div class="lab">一只青蛙一天捕食害虫（通俗范围）</div>
+      </div>
+      <div class="stat">
+        <div class="num">≈1.5<small>万只/年</small></div>
+        <div class="lab">一只青蛙一年捕食害虫的通俗估算</div>
+      </div>
+      <div class="stat">
+        <div class="num">54.1<small>%</small></div>
+        <div class="lab">吕宋疣蛙食谱中的水稻害虫占比</div>
+      </div>
+      <div class="stat">
+        <div class="num">67.2<small>%</small></div>
+        <div class="lab">日本树蛙食谱中的蚜虫占比</div>
+      </div>
+    </div>
+
+    <!-- 图 2：GIF -->
+    <div class="card">
+      <h3>图 2 · 一只青蛙的“捕食倒计时”</h3>
+      <p class="desc">动图演示</p>
+      <div class="gif-wrap">
+        <img src="31.gif" alt="图2：一只青蛙的捕食倒计时" />
+      </div>
+      <p class="note">图片来源：同级目录文件 31.gif。</p>
+    </div>
+  </section>
+
+  <!-- ==================== 04 缺口 ==================== -->
+  <section id="sec-gap">
+    <h2>04 &nbsp;缺口：在数据不足中加速退场</h2>
+    <p>
+      保护青蛙的数据缺口同样值得注意。两栖动物占全球受威胁脊椎动物的 <span class="hl">25.2%</span>，获得的保护资金却仅占
+      <span class="hl">3.4%</span>；栖息地丧失与退化威胁着 <span class="hl">2,684 种</span> 两栖动物，是单一最大威胁类别。
+    </p>
+    <p>
+      与此同时，超过一半的蛙类物种至今只有成体描述，胚胎、蝌蚪阶段的栖息地和习性几乎空白，而保护措施往往只瞄准成体。
+      青蛙的“消失”不只是数量下降，更是一场在数据不足中加速的退场。
+    </p>
+
+    <!-- 表 1：折线图 -->
+    <div class="card">
+      <h3>表 1 · 青蛙科普数据新闻关键变量（折线图）</h3>
+      <p class="desc">
+        横向为 11 个关键变量，纵向为数值（对数刻度，兼顾“种”与“%”两种量级）。
+        鼠标悬停 / 点击数据点，可查看<b>具体数值、单位、占最大值比例与数据来源</b>。
+      </p>
+      <div class="chart-box tall">
+        <canvas id="lineChart"></canvas>
+      </div>
+      <p class="note">
+        说明：因变量单位不统一（种 / % / 只·天⁻¹），纵轴采用对数刻度以便同图呈现；点的颜色区分单位类型（深蓝＝物种数量类，浅蓝＝比例类）。
+        数据来源：IUCN 红色名录 2025-2、IUCN ASG FrogLog (2026)、Froglife / Frost 数据库 (2025 年中)、
+        生物物种名录 (COL, 2025 年 3 月)、Amphibian Ark / Borzée et al. (2025)、菲律宾稻田研究 (Elsevier, 2019)、
+        日本豆田胃含物研究 (2007)、全球两栖动物评估综合。
+      </p>
+
+      <details class="data-details">
+        <summary>展开查看表 1 原始数据</summary>
+        <table>
+          <thead>
+            <tr><th>变量</th><th>数值/类别</th><th>来源/说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>全球两栖动物已描述物种数</td><td>9,072 种</td><td>IUCN ASG FrogLog (2026)</td></tr>
+            <tr><td>无尾目（蛙+蟾）物种数</td><td>7,828 种</td><td>Froglife / Frost 数据库 (2025 年中)</td></tr>
+            <tr><td>中国蛙科记录物种数</td><td>164 种</td><td>生物物种名录 (COL)，2025 年 3 月</td></tr>
+            <tr><td>两栖动物受威胁比例 (IUCN)</td><td>41%</td><td>IUCN 红色名录 2025-2</td></tr>
+            <tr><td>蛙类（无尾目）受威胁比例</td><td>39%</td><td>Amphibian Ark / Borzée et al. (2025)</td></tr>
+            <tr><td>一天捕食害虫（通俗范围）</td><td>50–200 只/天；约 1.5 万只/年</td><td>中国科普与田间观测综述</td></tr>
+            <tr><td>吕宋疣蛙食谱中害虫占比</td><td>54.1%</td><td>菲律宾稻田研究 (Elsevier, 2019)</td></tr>
+            <tr><td>日本树蛙食谱中蚜虫占比</td><td>67.2%</td><td>日本豆田胃含物研究 (2007)</td></tr>
+            <tr><td>栖息地丧失威胁物种数</td><td>2,684 种</td><td>全球两栖动物评估综合</td></tr>
+            <tr><td>两栖动物占受威胁脊椎动物比例</td><td>25.2%</td><td>同上</td></tr>
+            <tr><td>两栖动物获得保护资金比例</td><td>3.4%</td><td>同上</td></tr>
+          </tbody>
+        </table>
+      </details>
+    </div>
+  </section>
+
+  <!-- ==================== 结论 ==================== -->
+  <div class="conclusion">
+    <h2>三点收束</h2>
+    <p>
+      青蛙的多样性仍在被“发现”（9,000 种里程碑），但其生存空间在被“压缩”（41% 受威胁）；
+      它在农田中的功能可以被量化（害虫占比过半），却只获得极不相称的保护资源（3.4%）。
+    </p>
+    <p>
+      数据新闻的意义不在于把青蛙“可爱化”，而在于把它的退场从一句“数量减少”变成一组可追踪、可比较、可追问的数字。
+    </p>
+  </div>
+
+</main>
+
+<!-- ==================== 页脚 ==================== -->
+<footer>
+  <div class="wrap">
+    <p>本页为数据新闻可视化作品，所有数据均标注来源，图表中的对数刻度仅用于同图比较，不代表线性比例关系。</p>
+    <p>© 数据新闻项目 · 青蛙的“三张面孔”</p>
+  </div>
+</footer>
+
+<!-- ==================== Chart.js ==================== -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+/* =========================================================
+   图 1：受威胁物种比例对比 —— 柱形图
+   ========================================================= */
+(function () {
+  const barLabels = ['两栖动物', '蛙类（无尾目）', '哺乳动物', '鸟类'];
+  const barValues = [41, 39, 26, 11];
+  const barColors = ['#0D47A1', '#1976D2', '#64B5F6', '#BBDEFB'];
+
+  /* 自定义插件：在柱顶绘制数值标签 */
+  const barValueLabel = {
+    id: 'barValueLabel',
+    afterDatasetsDraw(chart) {
+      const { ctx } = chart;
+      const meta = chart.getDatasetMeta(0);
+      ctx.save();
+      ctx.font = '700 15px "PingFang SC","Microsoft YaHei",sans-serif';
+      ctx.fillStyle = '#0D47A1';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      meta.data.forEach((bar, i) => {
+        ctx.fillText(barValues[i] + '%', bar.x, bar.y - 8);
+      });
+      ctx.restore();
+    }
+  };
+
+  new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: {
+      labels: barLabels,
+      datasets: [{
+        label: '受威胁物种比例',
+        data: barValues,
+        backgroundColor: barColors,
+        hoverBackgroundColor: '#0B3D91',
+        borderRadius: 8,
+        borderSkipped: false,
+        maxBarThickness: 86
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 1300, easing: 'easeOutQuart' },
+      layout: { padding: { top: 28 } },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: 'rgba(13,71,161,.96)',
+          padding: 12,
+          cornerRadius: 8,
+          titleFont: { size: 14, weight: '700' },
+          bodyFont: { size: 13.5 },
+          displayColors: false,
+          callbacks: {
+            label: (ctx) => '受威胁比例：' + ctx.parsed.y + '%'
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          border: { color: '#DCEEFF' },
+          ticks: { color: '#111111', font: { size: 13.5, weight: '600' } }
+        },
+        y: {
+          beginAtZero: true,
+          max: 50,
+          grid: { color: '#EAF4FF' },
+          border: { display: false },
+          ticks: {
+            color: '#45525f',
+            font: { size: 12.5 },
+            callback: (v) => v + '%'
+          },
+          title: {
+            display: true,
+            text: '受威胁物种比例（%）',
+            color: '#0D47A1',
+            font: { size: 13, weight: '600' }
+          }
+        }
+      }
+    },
+    plugins: [barValueLabel]
+  });
+})();
+
+
+/* =========================================================
+   表 1：关键变量 —— 折线图（动态 + 互动）
+   ========================================================= */
+(function () {
+  const rows = [
+    { key: '全球两栖动物已描述物种数',       label: '全球两栖物种',     value: 9072, unit: '种',    note: 'IUCN ASG FrogLog (2026)' },
+    { key: '无尾目（蛙+蟾）物种数',           label: '无尾目物种',       value: 7828, unit: '种',    note: 'Froglife / Frost 数据库 (2025 年中)' },
+    { key: '中国蛙科记录物种数',             label: '中国蛙科',         value: 164,  unit: '种',    note: '生物物种名录 (COL)，2025 年 3 月' },
+    { key: '两栖动物受威胁比例 (IUCN)',       label: '两栖受威胁率',     value: 41,   unit: '%',    note: 'IUCN 红色名录 2025-2' },
+    { key: '蛙类（无尾目）受威胁比例',         label: '蛙类受威胁率',     value: 39,   unit: '%',    note: 'Amphibian Ark / Borzée et al. (2025)' },
+    { key: '一天捕食害虫（通俗范围上限）',     label: '日捕食害虫',       value: 200,  unit: '只/天', note: '中国科普与田间观测综述（50–200 只/天，取上限）' },
+    { key: '吕宋疣蛙食谱中害虫占比',           label: '吕宋疣蛙食谱',     value: 54.1, unit: '%',    note: '菲律宾稻田研究 (Elsevier, 2019)' },
+    { key: '日本树蛙食谱中蚜虫占比',           label: '日本树蛙食谱',     value: 67.2, unit: '%',    note: '日本豆田胃含物研究 (2007)' },
+    { key: '栖息地丧失威胁物种数',             label: '栖息地丧失威胁',   value: 2684, unit: '种',    note: '全球两栖动物评估综合' },
+    { key: '两栖动物占受威胁脊椎动物比例',     label: '占受威胁脊椎',     value: 25.2, unit: '%',    note: '全球两栖动物评估综合' },
+    { key: '两栖动物获得保护资金比例',         label: '保护资金占比',     value: 3.4,  unit: '%',    note: '全球两栖动物评估综合' }
+  ];
+
+  const lineLabels = rows.map(r => r.label);
+  const lineValues = rows.map(r => r.value);
+  const maxValue = Math.max(...lineValues);
+
+  /* 点颜色：物种数量类 = 深蓝，比例类 = 浅蓝 */
+  const pointColors = rows.map(r => (r.unit === '%' ? '#1E88E5' : '#0D47A1'));
+
+  new Chart(document.getElementById('lineChart'), {
+    type: 'line',
+    data: {
+      labels: lineLabels,
+      datasets: [{
+        label: '关键变量数值',
+        data: lineValues,
+        borderColor: '#1565C0',
+        borderWidth: 3,
+        tension: 0.35,
+        fill: false,
+        pointRadius: 6,
+        pointHoverRadius: 11,
+        pointBackgroundColor: pointColors,
+        pointBorderColor: '#ffffff',
+        pointBorderWidth: 2,
+        pointHoverBackgroundColor: '#00ACC1',
+        pointHoverBorderColor: '#ffffff',
+        pointHoverBorderWidth: 3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 1600, easing: 'easeOutQuart' },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: 'rgba(13,71,161,.96)',
+          padding: 14,
+          cornerRadius: 10,
+          titleFont: { size: 14, weight: '700' },
+          bodyFont: { size: 13 },
+          bodySpacing: 5,
+          displayColors: false,
+          callbacks: {
+            title: (items) => rows[items[0].dataIndex].key,
+            label: (ctx) => {
+              const r = rows[ctx.dataIndex];
+              const share = (r.value / maxValue * 100).toFixed(1);
+              return [
+                '数值：' + r.value + ' ' + r.unit,
+                '占全表最大值的比例：' + share + '%（最大值 ' + maxValue.toLocaleString() + ' 种）',
+                '来源：' + r.note
+              ];
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          border: { color: '#DCEEFF' },
+          ticks: {
+            color: '#111111',
+            font: { size: 11 },
+            maxRotation: 42,
+            minRotation: 42,
+            autoSkip: false
+          }
+        },
+        y: {
+          type: 'logarithmic',
+          min: 1,
+          max: 20000,
+          grid: { color: '#EAF4FF' },
+          border: { display: false },
+          ticks: {
+            color: '#45525f',
+            font: { size: 12 },
+            callback: (v) => ([1, 10, 100, 1000, 10000].includes(v) ? v.toLocaleString() : '')
+          },
+          title: {
+            display: true,
+            text: '数值（对数刻度）',
+            color: '#0D47A1',
+            font: { size: 13, weight: '600' }
+          }
+        }
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
